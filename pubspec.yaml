@@ -1,0 +1,35 @@
+name: mockmate_ai
+description: AI based mock interview application
+
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  lottie: ^3.1.0
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.0
+  flutter_dotenv: ^5.1.0
+  flutter_markdown: ^0.6.18
+  flutter_tts: ^3.8.5
+  google_sign_in: ^6.2.1
+  
+
+
+  http: ^1.2.0
+  provider: ^6.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/.env
+    - assets/lottie/
