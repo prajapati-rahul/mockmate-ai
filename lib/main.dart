@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'firebase_options.dart';
 import 'auth/login_screen.dart';
-import 'interview/interview_screen.dart';
-import 'package:lottie/lottie.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load env
-  await dotenv.load(fileName: "assets/.env");
-
-  // Init Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -29,33 +21,31 @@ class MockMateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-  debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
 
-  themeMode: ThemeMode.system, // 🌙 AUTO MODE
+      themeMode: ThemeMode.system,
 
-  theme: ThemeData(
-    brightness: Brightness.light,
-    primaryColor: const Color(0xFF1E3C72),
-    scaffoldBackgroundColor: Colors.white,
-    cardTheme: const CardThemeData(
-      elevation: 6,
-      margin: EdgeInsets.all(12),
-    ),
-  ),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: const Color(0xFF1E3C72),
+        scaffoldBackgroundColor: Colors.white,
+        cardTheme: const CardThemeData(
+          elevation: 6,
+          margin: EdgeInsets.all(12),
+        ),
+      ),
 
-  darkTheme: ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: Colors.indigo,
-    scaffoldBackgroundColor: const Color(0xFF121212),
-    cardTheme: const CardThemeData(
-      elevation: 6,
-      margin: EdgeInsets.all(12),
-    ),
-  ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.indigo,
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        cardTheme: const CardThemeData(
+          elevation: 6,
+          margin: EdgeInsets.all(12),
+        ),
+      ),
 
-  home: const LoginScreen(),
-);
-
-
+      home: const LoginScreen(),
+    );
   }
 }

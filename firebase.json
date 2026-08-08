@@ -1,1 +1,56 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"mockmate-ai-106","appId":"1:833973645622:android:bcc1fa521e9a60ade00397","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"mockmate-ai-106","configurations":{"android":"1:833973645622:android:bcc1fa521e9a60ade00397","ios":"1:833973645622:ios:e0ac5ba906baf75ae00397","macos":"1:833973645622:ios:e0ac5ba906baf75ae00397","web":"1:833973645622:web:746eecf9fb8ab8c0e00397","windows":"1:833973645622:web:c66671caec7f7d63e00397"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mockmate-ai-106",
+          "appId": "1:833973645622:android:bcc1fa521e9a60ade00397",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mockmate-ai-106",
+          "configurations": {
+            "android": "1:833973645622:android:bcc1fa521e9a60ade00397",
+            "ios": "1:833973645622:ios:e0ac5ba906baf75ae00397",
+            "macos": "1:833973645622:ios:e0ac5ba906baf75ae00397",
+            "web": "1:833973645622:web:746eecf9fb8ab8c0e00397",
+            "windows": "1:833973645622:web:c66671caec7f7d63e00397"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ]
+}

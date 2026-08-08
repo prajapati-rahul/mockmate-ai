@@ -3,7 +3,11 @@ import 'package:lottie/lottie.dart';
 
 class FeedbackScreen extends StatelessWidget {
   final String feedback;
-  const FeedbackScreen({super.key, required this.feedback});
+
+  const FeedbackScreen({
+    super.key,
+    required this.feedback,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,6 @@ class FeedbackScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // 🎉 Success Animation
             Lottie.asset(
               'assets/lottie/success.json',
               height: 180,
@@ -24,7 +27,6 @@ class FeedbackScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // 📝 Feedback Card
             Expanded(
               child: Card(
                 elevation: 4,
@@ -48,20 +50,13 @@ class FeedbackScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // 🔙 Back Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.arrow_back),
                 label: const Text("Back to Interview"),
                 onPressed: () {
-                  Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => ResultScreen(result: result),
-  ),
-);
-
+                  Navigator.pop(context);
                 },
               ),
             ),
