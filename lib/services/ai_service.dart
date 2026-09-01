@@ -1,39 +1,79 @@
-import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class AIService {
   AIService();
 
-  final FirebaseFunctions _functions =
-      FirebaseFunctions.instanceFor(region: 'us-central1');
+  // Local backend for development.
+  //
+  // Flutter Web running on the same PC:
+  // localhost works.
+  //
+  // Android emulator:
+  // 10.0.2.2 points to your PC's localhost.
+  //
+  // Physical phone:
+  // Replace this with your PC's local network IP.
+  String get baseUrl {
+    if (kIsWeb) {
+      return 'http://localhost:3000';
+    }
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return 'http://10.0.2.2:3000';
+    }
+
+    return 'http://localhost:3000';
+  }
 
   Future<String> generateQuestion(String role) async {
     try {
-      final callable = _functions.httpsCallable(
-        'mockmateAI',
-        options: HttpsCallableOptions(
-          timeout: const Duration(seconds: 60),
-        ),
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/generate-question'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'role': role,
+        }),
       );
 
-      final response = await callable.call({
-        'action': 'generateQuestion',
-        'role': role,
-      });
+      debugPrint(
+        'Generate Question Status: ${response.statusCode}',
+      );
 
-      final data = Map<String, dynamic>.from(response.data as Map);
+      debugPrint(
+        'Generate Question Body: ${response.body}',
+      );
 
-      final result = data['result'];
+      if (response.statusCode != 200) {
+        String message = 'Unable to generate interview question.';
 
-      if (result == null || result.toString().trim().isEmpty) {
+        try {
+          final data = jsonDecode(response.body);
+
+          if (data['error'] != null) {
+            message = data['error'].toString();
+          }
+        } catch (_) {}
+
+        throw Exception(message);
+      }
+
+      final data = jsonDecode(response.body);
+
+      final question = data['question'];
+
+      if (question == null ||
+          question.toString().trim().isEmpty) {
         throw Exception('AI returned an empty question.');
       }
 
-      return result.toString().trim();
-    } on FirebaseFunctionsException catch (e) {
-      throw Exception(
-        e.message ?? 'Unable to generate interview question.',
-      );
+      return question.toString().trim();
     } catch (e) {
+      debugPrint('Generate Question Error: $e');
+
       throw Exception(
         'Unable to generate interview question: $e',
       );
@@ -46,34 +86,53 @@ class AIService {
     String role,
   ) async {
     try {
-      final callable = _functions.httpsCallable(
-        'mockmateAI',
-        options: HttpsCallableOptions(
-          timeout: const Duration(seconds: 60),
-        ),
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/evaluate-answer'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'question': question,
+          'answer': answer,
+          'role': role,
+        }),
       );
 
-      final response = await callable.call({
-        'action': 'evaluateAnswer',
-        'question': question,
-        'answer': answer,
-        'role': role,
-      });
+      debugPrint(
+        'Evaluate Answer Status: ${response.statusCode}',
+      );
 
-      final data = Map<String, dynamic>.from(response.data as Map);
+      debugPrint(
+        'Evaluate Answer Body: ${response.body}',
+      );
 
-      final result = data['result'];
+      if (response.statusCode != 200) {
+        String message = 'Unable to evaluate your answer.';
 
-      if (result == null || result.toString().trim().isEmpty) {
-        throw Exception('AI returned an empty evaluation.');
+        try {
+          final data = jsonDecode(response.body);
+
+          if (data['error'] != null) {
+            message = data['error'].toString();
+          }
+        } catch (_) {}
+
+        throw Exception(message);
       }
 
-      return result.toString().trim();
-    } on FirebaseFunctionsException catch (e) {
-      throw Exception(
-        e.message ?? 'Unable to evaluate your answer.',
-      );
+      final data = jsonDecode(response.body);
+
+      final feedback = data['feedback'];
+
+      if (feedback == null ||
+          feedback.toString().trim().isEmpty) {
+        throw Exception('AI returned empty feedback.');
+      }
+
+      return feedback.toString().trim();
     } catch (e) {
+      debugPrint('Evaluate Answer Error: $e');
+
       throw Exception(
         'Unable to evaluate your answer: $e',
       );

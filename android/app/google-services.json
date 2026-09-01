@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "833973645622-p1ucgjqfv8iv7futkihm9oqal9oq0rtc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mockmate_ai",
+            "certificate_hash": "1368b15f5268e6898f3c097cf391607a44cde14c"
+          }
+        },
+        {
           "client_id": "833973645622-j5qciua4dci6p94689gm06fur9gelo2f.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "833973645622-j5qciua4dci6p94689gm06fur9gelo2f.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "833973645622-02030asr5cul51hg0ee8bllnd9g80f2o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mockmateAi"
+              }
             }
           ]
         }

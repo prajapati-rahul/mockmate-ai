@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
+import '../auth/auth_service.dart';
 import 'register_screen.dart';
 import '../interview/interview_screen.dart';
 import 'package:lottie/lottie.dart';
